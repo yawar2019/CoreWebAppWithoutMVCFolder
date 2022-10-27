@@ -1,4 +1,5 @@
 ﻿using CoreWebAppWithoutMVCFolder.Models;
+using CoreWebAppWithoutMVCFolder.Repository;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
@@ -13,10 +14,12 @@ namespace CoreWebAppWithoutMVCFolder.Controllers
     {
         IWebHostEnvironment _env;
         IConfiguration _configuration;
-        public HomeController(IWebHostEnvironment env,IConfiguration configuration)
+        IEmployeeRepository _employeeRepository;
+        public HomeController(IWebHostEnvironment env,IConfiguration configuration,IEmployeeRepository employeeRepository)
         {
             _env = env;
             _configuration = configuration;
+            _employeeRepository = employeeRepository;
         }
         public IActionResult Index()
         {
@@ -45,6 +48,11 @@ namespace CoreWebAppWithoutMVCFolder.Controllers
             emp.EmpSalary = 21000;
 
             return View(emp);
+        }
+
+        public IActionResult GetAllTheEmployees()
+        {
+           return View(_employeeRepository.GetAllTheEmployees());
         }
     }
 }
